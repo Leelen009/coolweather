@@ -43,6 +43,7 @@ public class ChooseAreaFragment extends Fragment {
     private ProgressDialog progressDialog;
     private TextView titleText;
     private Button backButton;
+    private Button searchButton;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> dataList = new ArrayList<>();
@@ -59,6 +60,7 @@ public class ChooseAreaFragment extends Fragment {
         View view = inflater.inflate(R.layout.choose_area,container,false);
         titleText = (TextView) view.findViewById(R.id.title_text);
         backButton = (Button) view.findViewById(R.id.back_button);
+        searchButton = (Button) view.findViewById(R.id.search_location);
         listView = (ListView) view.findViewById(R.id.list_view);
         adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,
                 dataList);
@@ -80,7 +82,7 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 } else if(currentLevel == LEVEL_COUNTY){
                     String weatherId = countyList.get(position).getWeatherId();
-                    if(getActivity() instanceof MainActivity){
+                    /*if(getActivity() instanceof MainActivity){
                         Intent intent = new Intent(getActivity(),WeatherActivity.class);
                         intent.putExtra("weather_id",weatherId);
                         startActivity(intent);
@@ -90,8 +92,11 @@ public class ChooseAreaFragment extends Fragment {
                         activity.drawerLayout.closeDrawers();
                         activity.swipeRefreshLayout.setRefreshing(true);
                         activity.requestWeather(weatherId);
-                    }
-
+                    }*/
+                    WeatherActivity activity = (WeatherActivity) getActivity();
+                    activity.drawerLayout.closeDrawers();
+                    activity.swipeRefreshLayout.setRefreshing(true);
+                    activity.requestWeather(weatherId);
                 }
             }
         });
@@ -106,6 +111,28 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
+
+        searchButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                /*
+                if(getActivity() instanceof MainActivity){
+                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
+                    startActivity(intent);
+                    WeatherActivity activity = (WeatherActivity) getActivity();
+                    getActivity().finish();
+                    activity.requestLocation();
+                } else if(getActivity() instanceof WeatherActivity){
+                    WeatherActivity activity = (WeatherActivity) getActivity();
+                    activity.drawerLayout.closeDrawers();
+                    activity.requestLocation();
+                }*/
+                WeatherActivity activity = (WeatherActivity) getActivity();
+                activity.drawerLayout.closeDrawers();
+                activity.requestLocation();
+            }
+        });
+
         queryProvinces();
     }
 

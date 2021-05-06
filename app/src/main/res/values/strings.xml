@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">知冷暖</string>
+    <string name="app_name">天气</string>
+    <string name="weather_key">8ed18c17ef6245f7aa46edccdfc177c9</string>
+    <string name="location_key">2bba78b0acb64a6da4da8a5af3427c3d</string>
 </resources>

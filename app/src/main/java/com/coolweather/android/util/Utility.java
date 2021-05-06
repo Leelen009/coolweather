@@ -1,12 +1,15 @@
 package com.coolweather.android.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.coolweather.android.db.City;
 import com.coolweather.android.db.County;
 import com.coolweather.android.db.Province;
+import com.coolweather.android.gson.Location;
 import com.coolweather.android.gson.Weather;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,9 +83,22 @@ public class Utility {
     public static Weather handleWeatherResponse(String response){
         try{
             JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather6");
             String weatherContent = jsonArray.getJSONObject(0).toString();
-            return new Gson().fromJson(weatherContent,Weather.class);
+            return new Gson().fromJson(weatherContent, Weather.class);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //将返回的JSON数据解析成Location实体类
+    public static Location handleLocationResponse(String response){
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("location");
+            String locationContent = jsonArray.getJSONObject(0).toString();
+            return new Gson().fromJson(locationContent, Location.class);
         } catch (Exception e){
             e.printStackTrace();
         }
